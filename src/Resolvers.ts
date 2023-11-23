@@ -1,5 +1,5 @@
-import { mockArtists, mockSongs } from "./dataset"
-import { Song } from "./types/types"
+import { mockAlbums, mockArtists, mockPlaylists, mockSongs } from "./dataset"
+import { Album, Playlist, Song } from "./types/types"
 
 const Resolvers = {
     Song: {
@@ -7,16 +7,44 @@ const Resolvers = {
             return mockArtists.find(artist => artist.id == song.artistId)
         }
     },
+	Album: {
+		songs: (album: Album) => {
+			return mockSongs.filter(song => song.albumId == album.id)
+		},
+		artist: (album: Album) => {
+			return mockArtists.find(artist => artist.id == album.artistId)
+		}
+	},
+	Playlist: {
+		songs: (playlist: Playlist) => {
+			return mockSongs.filter(song => song.playlistIds?.includes(playlist.id))
+		}
+	},
     Query: {
         fetchAllSongs: () => {
             return mockSongs
         },
-        fetchSong: (_: any, args: any) => {
+        fetchSongById: (_: any, args: any) => {
             return mockSongs.find(song => song.id == args.id)
         },
-        searchSong:(_: any, args: any) => {
-            return mockSongs.filter(song => song.name.toLocaleLowerCase().includes(args.containing))
-        }
+        searchSongsByQuery:(_: any, args: any) => {
+            return mockSongs.filter(song => song.name.toLocaleLowerCase().includes(args.query))
+        },
+		searchSongsByArtist:(_: any, args: any) => {
+			return mockSongs.filter(song => song.artistId == args.id)
+		},
+		fetchAllArtists: () => {
+			return mockArtists
+		},
+		fetchArtistById: (_: any, args: any) => {
+			return mockArtists.find(artist => artist.id == args.id)
+		},
+		fetchAllAlbums: () => {
+			return mockAlbums
+		},
+		fetchAlbumById: (_: any, args: any) => {
+			return mockAlbums.find(album => album.id == args.id)
+		},
     }
 }
 

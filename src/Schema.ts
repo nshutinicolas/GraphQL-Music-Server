@@ -36,21 +36,32 @@ const Schema = `#graphql
         name: String!
         description: String
         imageUrl: String
-        song: [Song]
+        songs: [Song]
     }
 
     type Query {
-        "Fetch all songs in collection"
+        "Fetch all songs available"
         fetchAllSongs: [Song]
-        "Fetch song from ID"
-        fetchSong(id: ID!): Song
-        "Search for a song that has title matching"
-        searchSong(containing: String): [Song]
+        "Fetch song by ID"
+        fetchSongById(id: ID!): Song
+        "Search for a song that has title matching a query"
+        searchSongsByQuery(query: String): [Song]
+        "Search song by an artist"
+        searchSongsByArtist(id: ID!): [Song]
+        "Fetch all artists available"
+        fetchAllArtists: [Artist]
+        "Fetch artist by ID"
+        fetchArtistById(id: ID!): Artist
+        "Fetch all albums from collection"
+        fetchAllAlbums: [Album]
+        "Fetch album by ID"
+        fetchAlbumById(id: ID!): Album
     }
 `
 
 export default Schema;
 /**
+ * TODO: Possibility of using Fragment to extract out pagination and id, name fields
  * Possible acions on song
  * Search by genres
  * Search by artist
