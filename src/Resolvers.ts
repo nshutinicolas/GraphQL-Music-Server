@@ -1,5 +1,7 @@
 import { mockAlbums, mockArtists, mockPlaylists, mockSongs } from "./dataset"
 import { Album, Playlist, Song } from "./types/types"
+import axios from "axios"
+import fs from "fs"
 
 const Resolvers = {
     Song: {
@@ -33,7 +35,8 @@ const Resolvers = {
 		searchSongsByArtist:(_: any, args: any) => {
 			return mockSongs.filter(song => song.artistId == args.id)
 		},
-		fetchAllArtists: () => {
+		fetchAllArtists: async () => {
+			
 			return mockArtists
 		},
 		fetchArtistById: (_: any, args: any) => {

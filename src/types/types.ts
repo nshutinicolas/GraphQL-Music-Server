@@ -2,6 +2,7 @@ type Artist = {
     id: string
     name: string
     imageUrl?: string
+    biography?: string
 }
 
 type Song = {
